@@ -2,6 +2,7 @@
 /state.json
 /workspaces/*/problem.json
 /compile_flags.txt
+/.env
 **/.DS_Store
 **/.idea
 **/.vscode
