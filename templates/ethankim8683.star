@@ -20,10 +20,8 @@ sol: sol.cpp
 		-O0 \\
 		-g \\
 		-std=c++20 \\
-		-I../../include \\
 		-isystem/opt/homebrew/include \\
 		-L/opt/homebrew/lib \\
-		-lraylib
 
 outputs/%.txt: inputs/%.txt sol
 	mkdir -p outputs

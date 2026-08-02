@@ -1,2 +1,9 @@
 /bin/
 /state.json
+/workspaces/*/problem.json
+/compile_flags.txt
+**/.DS_Store
+**/.idea
+**/.vscode
+**/*.o
+**/*.dSYM
