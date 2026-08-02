@@ -1,0 +1,9 @@
+---
+BasedOnStyle: Google
+SpaceAfterCStyleCast: true
+PointerAlignment: Right
+ReferenceAlignment: Right
+BracedInitializerIndentWidth: 2
+---
+
+
