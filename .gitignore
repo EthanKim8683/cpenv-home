@@ -1,6 +1,6 @@
 /bin/
 /state.json
-/workspaces/*/problem.json
+/workspaces/*/.problem.json
 /compile_flags.txt
 /.env
 **/.DS_Store
