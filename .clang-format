@@ -4,6 +4,7 @@ SpaceAfterCStyleCast: true
 PointerAlignment: Right
 ReferenceAlignment: Right
 BracedInitializerIndentWidth: 2
+UseTab: Always
+IndentWidth: 4
+TabWidth: 4
 ---
-
-

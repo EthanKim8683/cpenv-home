@@ -24,5 +24,13 @@ signed main() {
 	cin.tie(0)->sync_with_stdio(0);
 	cin.exceptions(cin.failbit);
 
+	// after the first operation, all value is contained in the leaves, so the
+	// remaining k - 1 operations are on the leaves in order from greatest to
+	// least
 	//
+	// the maximum distance property is interesting because each node only ever
+	// has to consider two other nodes, the second of which is only considered
+	// when the first is not available
+	//
+	// i imagine we can do something like re-rooting but with treap or something
 }
