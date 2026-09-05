@@ -8,7 +8,7 @@ mkdir -p "$(dirname "$DEST")"
 {
 	echo "return {"
 	shopt -s globstar nullglob
-	for f in "$SRC"/**/*.{h,c,hpp,cpp}; do
+	for f in "$SRC"/**/*; do
 		[[ "$f" == **/.agents/** ]] && continue
 		[[ "$f" == **/contest/** ]] && continue
 		rel="${f#"$SRC"/}"
