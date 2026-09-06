@@ -21,8 +21,8 @@ int chmin(auto &u, auto v) { return u > v ? u = v, 1 : 0; }
 int chmax(auto &u, auto v) { return u < v ? u = v, 1 : 0; }
 
 signed main() {
-	cin.tie(0)->sync_with_stdio(0);
-	cin.exceptions(cin.failbit);
+  cin.tie(0)->sync_with_stdio(0);
+  cin.exceptions(cin.failbit);
 
-	//
+  //
 }

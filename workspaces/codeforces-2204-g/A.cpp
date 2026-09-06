@@ -1,6 +1,7 @@
 #ifndef U
 #pragma GCC optimize("Ofast,unroll-loops")
 #endif
+#include <assert.h>
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -30,7 +31,8 @@ signed main() {
   //
   // i think we must use PIE (and matrix exponentiation, of course)
   //
-  // every column picks a side to be invalidated on in the next column, which contributes the amount above and the amount below
+  // every column picks a side to be invalidated on in the next column, which
+  // contributes the amount above and the amount below
 
   int N, M, MOD;
   cin >> N >> M >> MOD;
@@ -40,9 +42,7 @@ signed main() {
     vc rv(a.size(), vi(b[0].size(), 0));
     rep(i, 0, a.size()) {
       rep(j, 0, b[0].size()) {
-        rep(k, 0, a[0].size()) {
-          (rv[i][j] += a[i][k] * b[k][j]) %= MOD;
-        }
+        rep(k, 0, a[0].size()) { (rv[i][j] += a[i][k] * b[k][j]) %= MOD; }
       }
     }
     return rv;
@@ -71,22 +71,20 @@ signed main() {
       }
     }
   }
-  rep(i, 0, M) {
-    rep(j, i, M) {
-      (x[M][i] -= 1) %= MOD;
-      (x[M][M - 1 - j] -= 1) %= MOD;
-      (x[M][M] += 1) %= MOD;
-      (x[M][M + 1] += 1) %= MOD;
-    }
-  }
-  (x[M + 1][M + 1] += 1) %= MOD;
-  auto xpow = matpow(x, N - 1);
-  int ans = 0;
-  rep(i, 0, M) {
-    (ans -= xpow[M - 1 - i][M + 1]) %= MOD;
-    (ans += xpow[M][M + 1]) %= MOD;
-    (ans += xpow[M + 1][M + 1]) %= MOD;
-  }
-  (ans += MOD) %= MOD;
-  cout << ans << '\n';
+  rep(i, 0, M){rep(j, i, M){(x[M][i] -= 1) %= MOD;
+  (x[M][M - 1 - j] -= 1) %= MOD;
+  (x[M][M] += 1) %= MOD;
+  (x[M][M + 1] += 1) %= MOD;
+}
+}
+(x[M + 1][M + 1] += 1) %= MOD;
+auto xpow = matpow(x, N - 1);
+int ans = 0;
+rep(i, 0, M) {
+  (ans -= xpow[M - 1 - i][M + 1]) %= MOD;
+  (ans += xpow[M][M + 1]) %= MOD;
+  (ans += xpow[M + 1][M + 1]) %= MOD;
+}
+(ans += MOD) %= MOD;
+cout << ans << '\n';
 }
