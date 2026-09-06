@@ -1,3 +1,4 @@
+// TODO: replace size with a general property generic
 template <class T>
 struct implicit_treap {
  private:

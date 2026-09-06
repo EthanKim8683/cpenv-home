@@ -11,7 +11,7 @@ struct dsu_with_potentials {
 
  public:
   dsu_with_potentials() {}
-  dsu_with_potentials(int n, S nil) : root(n, -1), V(n, nil) {}
+  dsu_with_potentials(int n, S zero) : root(n, -1), V(n, zero) {}
 
   int leader(int a) {
     if (root[a] < 0) return a;
