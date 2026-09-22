@@ -1,3 +1,23 @@
+#ifndef U
+#pragma GCC optimize("Ofast,unroll-loops")
+#endif
+#include <assert.h>
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define int long long
+#define rep(i, a, b) for (int i = a; i < (b); ++i)
+#define all(x) begin(x), end(x)
+#define sz(x) (int) (x).size()
+#define eb emplace_back
+#define pb push_back
+#define vc vector
+#define fs first
+#define sd second
+typedef pair<int, int> pii;
+typedef vc<int> vi;
+
 // TODO: replace size with a general property generic
 template <class T>
 struct implicit_treap {
@@ -15,13 +35,6 @@ struct implicit_treap {
   node *root;
 
   static int safe_size(node *a) { return a == nullptr ? 0 : a->size; }
-
-  static void safe_free(node *a) {
-    if (a == nullptr) return;
-    safe_free(a->l);
-    safe_free(a->r);
-    free(a);
-  }
 
   static void safe_pull(node *a) {
     if (a == nullptr) return;
@@ -45,10 +58,12 @@ struct implicit_treap {
     if (l == nullptr) return r;
     if (r == nullptr) return l;
     if (rng() % (safe_size(l) + safe_size(r)) < safe_size(l)) {
+      l = new node(*l);
       l->r = merge(l->r, r);
       safe_pull(l);
       return l;
     } else {
+      r = new node(*r);
       r->l = merge(l, r->l);
       safe_pull(r);
       return r;
@@ -59,11 +74,13 @@ struct implicit_treap {
     if (a == nullptr) return {nullptr, nullptr};
     if (i <= safe_size(a->l)) {
       auto [l, r] = split(a->l, i);
+      a = new node(*a);
       a->l = r;
       safe_pull(a);
       return {l, a};
     } else {
       auto [l, r] = split(a->r, i - (safe_size(a->l) + 1));
+      a = new node(*a);
       a->r = l;
       safe_pull(a);
       return {a, r};
@@ -91,27 +108,45 @@ struct implicit_treap {
 
   implicit_treap(int n, T v) : implicit_treap(std::vector<T>(n, v)) {}
 
-  ~implicit_treap() { safe_free(root); }
-
   int size() const { return safe_size(root); }
 
-  void insert(int i, T v) {
-    assert(0 <= i and i <= size());
-    auto [l, r] = split(root, i);
-    root = merge(merge(l, new node(v)), r);
-  }
-
-  void erase(int i) {
-    assert(0 <= i and i < size());
-    auto [l1, r1] = split(root, i);
-    auto [l2, r2] = split(r1, 1);
-    safe_free(l2);
-    root = merge(l1, r2);
-  }
-
-  void set(int i, T v) { get_node(i)->v = v; }
-
   T get(int i) { return get_node(i)->v; }
+
+  void transition(int x) {
+    auto [l1, r1] = split(root, x);
+    auto [l2, r2] = split(r1, x);
+    root = merge(l2, root);
+  }
 };
 template <class T>
 std::mt19937 implicit_treap<T>::rng(time(nullptr));
+
+int chmin(auto &u, auto v) { return u > v ? u = v, 1 : 0; }
+int chmax(auto &u, auto v) { return u < v ? u = v, 1 : 0; }
+
+signed main() {
+  cin.tie(0)->sync_with_stdio(0);
+  cin.exceptions(cin.failbit);
+
+  int N;
+  cin >> N;
+
+  vi A(N);
+  for (auto &e : A) cin >> e;
+
+  // vi results(2 * N + 1);
+  // iota(all(results), 0);
+  // for (int i = N - 1; i >= 0; i--) {
+  //   vi prefix(results.begin() + A[i], results.begin() + 2 * A[i]);
+  //   results.insert(results.begin(), all(prefix));
+  //   cout << results[0] << ' ';
+  // }
+
+  vi v(2 * N);
+  iota(all(v), 0);
+  implicit_treap<int> tr(v);
+  for (int i = N - 1; i >= 0; i--) {
+    tr.transition(A[i]);
+    cout << tr.get(0) << ' ';
+  }
+}
