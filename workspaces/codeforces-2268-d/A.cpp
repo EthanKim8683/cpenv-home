@@ -17,6 +17,22 @@ using namespace std;
 typedef pair<int, int> pii;
 typedef vc<int> vi;
 
+// vc<int> v -> vc<T> v
+// v[i] > v[st.back()] -> above(v[i], v[st.back()])
+pair<int, vc<pii>> cartesian_tree(vc<int> v) {
+  vc<pii> rv(sz(v), {-1, -1});
+  vi st;
+  rep(i, 0, sz(v)) {
+    while (sz(st) and v[i] > v[st.back()]) {
+      rv[i].fs = st.back();
+      st.pop_back();
+    }
+    if (sz(st)) rv[st.back()].sd = i;
+    st.pb(i);
+  }
+  return {st[0], rv};
+}
+
 int chmin(auto &u, auto v) { return u > v ? u = v, 1 : 0; }
 int chmax(auto &u, auto v) { return u < v ? u = v, 1 : 0; }
 
@@ -36,21 +52,6 @@ signed main() {
     vi P(N);
     for (auto &e : P) cin >> e;
 
-    // int ans = N * (N - 1) / 2;
-    // vc<pii> stack;
-    // for (int i = N - 1; i >= 0; i--) {
-    //   while (sz(stack) > 0 and P[i] > stack.back().fs) {
-    //     stack.pop_back();
-    //   }
-    //   stack.eb(P[i], i);
-
-    //   rep(j, 0, sz(stack) - 1) {
-    //     int l = stack.end()[-j - 1].sd, r = stack.end()[-j - 2].sd;
-    //     ans += (j + 2) * (r - l) - 1;
-    //   }
-    // }
-    // cout << ans << '\n';
-
-    int ans = N * (N - 1) / 2;
+    auto [r, adj] = cartesian_tree(P);
   }
 }
