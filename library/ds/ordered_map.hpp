@@ -1,4 +1,7 @@
-template <class T, class S, class Compare = std::less<T>>
+#include <bits/extc++.h>
+
+using namespace __gnu_pbds;
+
+template <class S, class T, class U = less<T>>
 using ordered_map =
-    __gnu_pbds::tree<T, S, Compare, __gnu_pbds::rb_tree_tag,
-                     __gnu_pbds::tree_order_statistics_node_update>;
+    tree<S, T, U, rb_tree_tag, tree_order_statistics_node_update>;

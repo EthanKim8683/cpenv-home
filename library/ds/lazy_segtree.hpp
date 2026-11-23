@@ -10,7 +10,7 @@ struct lazy_segtree {
   }
   lazy_segtree(int m) : lazy_segtree(vc(m, e())) {}
   void ch(int i, F g) {
-    s[i] = mp(s[i], g);
+    s[i] = mp(g, s[i]);
     if (i < n) f[i] = cp(f[i], g);
   }
   void push(int i) {
@@ -22,7 +22,7 @@ struct lazy_segtree {
     }
   }
   void pull(int i) {
-    for (i += n; i >>= 1;) s[i] = mp(op(s[i << 1], s[i << 1 | 1]), f[i]);
+    for (i += n; i >>= 1;) s[i] = mp(f[i], op(s[i << 1], s[i << 1 | 1]));
   }
   S get(int i) {
     push(i);

@@ -1,8 +1,8 @@
-template <typename T, typename S>
-vc<T> rrdp(const vc<vi> &adj, S nil,
-           auto trans,    // function<S(T, int, int)>
-           auto merge,    // function<S(S, S)>
-           auto finalize  // function<T(S, int)>
+template <typename S, typename T>
+vc<S> rrdp(const vc<vi> &adj, T nil,
+           auto trans,    // (dp, a, i) -> tdp
+           auto merge,    // (tdp, tdp) -> tdp
+           auto finalize  // (tdp, a) -> dp
 ) {
   int n = sz(adj);
 
@@ -21,9 +21,9 @@ vc<T> rrdp(const vc<vi> &adj, S nil,
   };
   dfs(dfs, 0, -1);
 
-  vc<T> dp(n);
-  vc<S> ddp(n);
-  vc<vc<S>> tdp(n);
+  vc<S> dp(n);
+  vc<T> ddp(n);
+  vc<vc<T>> tdp(n);
   reverse(all(order));
   for (auto a : order) {
     tdp[a].resize(sz(adj[a]));
@@ -37,7 +37,7 @@ vc<T> rrdp(const vc<vi> &adj, S nil,
     dp[a] = finalize(ddp[a], a);
   }
 
-  vc<S> pdp(n, nil), sdp(n, nil);
+  vc<T> pdp(n, nil), sdp(n, nil);
   reverse(all(order));
   for (auto a : order) {
     rep(i, 0, sz(adj[a]) - 1) { pdp[i + 1] = merge(pdp[i], tdp[a][i]); }
@@ -45,7 +45,6 @@ vc<T> rrdp(const vc<vi> &adj, S nil,
     for (int i = sz(adj[a]) - 1; i >= 1; --i) {
       sdp[i - 1] = merge(tdp[a][i], sdp[i]);
     }
-
     rep(i, 0, sz(adj[a])) {
       int b = adj[a][i];
       if (b == par[a].fs) continue;
@@ -54,6 +53,5 @@ vc<T> rrdp(const vc<vi> &adj, S nil,
       dp[b] = finalize(merge(ddp[b], tdp[b][j]), b);
     }
   }
-
   return dp;
 }

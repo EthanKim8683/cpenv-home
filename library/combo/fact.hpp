@@ -1,9 +1,3 @@
-template <class T>
-T fact(int n) {
-  assert(n >= 0);
-  auto &fact = combinatorics_cache<T>::fact;
-  while (!(n < (int) fact.size())) {
-    fact.push_back(fact.back() * fact.size());
-  }
-  return fact[n];
-}
+vi fact(MAXN + 1);
+fact[0] = 1;
+rep(i, 1, MAXN + 1) fact[i] = fact[i - 1] * i % MOD;

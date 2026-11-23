@@ -1,14 +1,7 @@
-template <class T>
-std::vector<std::vector<T>> matmul(const std::vector<std::vector<T>> &a,
-                                   const std::vector<std::vector<T>> &b) {
-  assert(a[0].size() == b.size());
-  std::vector rv(a.size(), std::vector<T>(b[0].size(), 0));
-  for (int i = 0; i < a.size(); i++) {
-    for (int j = 0; j < b[0].size(); j++) {
-      for (int k = 0; k < a[0].size(); k++) {
-        rv[i][j] += a[i][k] * b[k][j];
-      }
-    }
+vc<vi> matmul(vc<vi> a, vc<vi> b) {
+  vc rv(sz(a), vi(sz(b[0]), 0));
+  rep(i, 0, sz(a)) rep(j, 0, sz(b[0])) rep(k, 0, sz(a[0])) {
+    rv[i][j] += a[i][k] * b[k][j];
   }
   return rv;
 }
